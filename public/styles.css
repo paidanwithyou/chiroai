@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChiroAI Studio</title>
+    <meta
+      name="description"
+      content="ChiroAI studio full-stack untuk workflow kreatif: author, colorist, editor, narrator, background, dan prompt visual realistis."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">C</div>
+          <div>
+            <div class="brand-name">ChiroAI</div>
+            <div class="brand-tag">Creative visual studio</div>
+          </div>
+        </div>
+        <button id="healthCheckBtn" class="secondary-btn small">API Status</button>
+      </header>
+
+      <main class="dashboard">
+        <aside class="left-panel card">
+          <div class="panel-title">Prompt Builder</div>
+
+          <form id="promptForm">
+            <label>
+              Karakter utama
+              <input name="character" type="text" value="artis perempuan muda dengan ekspresi tenang" />
+            </label>
+
+            <label>
+              Adegan
+              <input name="scene" type="text" value="jalan kota hujan malam dengan lampu neon dan angin lembut" />
+            </label>
+
+            <label>
+              Mood
+              <input name="mood" type="text" value="dramatic, cinematic, melancholic, elegant" />
+            </label>
+
+            <label>
+              Style
+              <input name="style" type="text" value="realistic digital painting, professional Ibis Paint coloring, ultra detailed" />
+            </label>
+
+            <label>
+              Format
+              <select name="format">
+                <option value="portrait" selected>Portrait</option>
+                <option value="full body">Full Body</option>
+                <option value="cinematic scene">Cinematic Scene</option>
+                <option value="close-up">Close Up</option>
+              </select>
+            </label>
+
+            <label>
+              Lighting
+              <select name="lighting">
+                <option value="soft neon cinematic lighting" selected>Soft neon cinematic</option>
+                <option value="golden hour dramatic lighting">Golden hour dramatic</option>
+                <option value="rainy moody studio lighting">Rainy moody studio</option>
+                <option value="natural daylight realism">Natural daylight realism</option>
+              </select>
+            </label>
+
+            <div class="button-row">
+              <button type="submit" class="primary-btn">Generate Prompt</button>
+              <button type="button" id="generateImageBtn" class="secondary-btn">Generate Image</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="right-panel card">
+          <div class="panel-title-row">
+            <div class="panel-title">Creative Output</div>
+            <button id="copyAllBtn" class="copy-btn">Copy All</button>
+          </div>
+
+          <div class="prompt-groups">
+            <div class="prompt-card">
+              <div class="prompt-header">
+                <span>Author</span>
+                <button class="mini-copy" data-target="authorPrompt">Copy</button>
+              </div>
+              <textarea id="authorPrompt" rows="4"></textarea>
+            </div>
+
+            <div class="prompt-card">
+              <div class="prompt-header">
+                <span>Colorist</span>
+                <button class="mini-copy" data-target="coloristPrompt">Copy</button>
+              </div>
+              <textarea id="coloristPrompt" rows="4"></textarea>
+            </div>
+
+            <div class="prompt-card">
+              <div class="prompt-header">
+                <span>Background</span>
+                <button class="mini-copy" data-target="backgroundPrompt">Copy</button>
+              </div>
+              <textarea id="backgroundPrompt" rows="4"></textarea>
+            </div>
+
+            <div class="prompt-card">
+              <div class="prompt-header">
+                <span>Editor</span>
+                <button class="mini-copy" data-target="editorPrompt">Copy</button>
+              </div>
+              <textarea id="editorPrompt" rows="4"></textarea>
+            </div>
+
+            <div class="prompt-card">
+              <div class="prompt-header">
+                <span>Narrator</span>
+                <button class="mini-copy" data-target="narratorPrompt">Copy</button>
+              </div>
+              <textarea id="narratorPrompt" rows="4"></textarea>
+            </div>
+
+            <div class="prompt-card final-card">
+              <div class="prompt-header">
+                <span>Final Prompt</span>
+                <button class="mini-copy" data-target="finalPrompt">Copy</button>
+              </div>
+              <textarea id="finalPrompt" rows="5"></textarea>
+            </div>
+          </div>
+
+          <div id="imagePreviewBox" class="image-preview hidden">
+            <div class="preview-label">Image preview</div>
+            <img id="imagePreview" alt="Generated preview" />
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,55 +1,119 @@
-# ChiroAI
+const form = document.getElementById('promptForm');
+const authorPrompt = document.getElementById('authorPrompt');
+const coloristPrompt = document.getElementById('coloristPrompt');
+const backgroundPrompt = document.getElementById('backgroundPrompt');
+const editorPrompt = document.getElementById('editorPrompt');
+const narratorPrompt = document.getElementById('narratorPrompt');
+const finalPrompt = document.getElementById('finalPrompt');
+const imagePreviewBox = document.getElementById('imagePreviewBox');
+const imagePreview = document.getElementById('imagePreview');
 
-ChiroAI adalah project starter untuk studio AI kreatif yang membantu workflow visual seperti:
+function setPromptFields(data) {
+  authorPrompt.value = data.authorPrompt || '';
+  coloristPrompt.value = data.coloristPrompt || '';
+  backgroundPrompt.value = data.backgroundPrompt || '';
+  editorPrompt.value = data.editorPrompt || '';
+  narratorPrompt.value = data.narratorPrompt || '';
+  finalPrompt.value = data.finalPrompt || '';
+}
 
-- Author: merancang konsep cerita dan komposisi
-- Colorist: menentukan palette, lighting, warna kulit, dan shading
-- Editor: menyusun frame, komposisi, dan keseimbangan visual
-- Narrator: menulis mood dan deskripsi cerita
-- Background: membangun setting dan atmosphere
-- Detail pass: polishing realistis dan kualitas akhir
+async function fetchGeneratedPrompt(payload) {
+  const response = await fetch('/api/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
 
-Tujuan proyek ini adalah menyediakan UI sederhana untuk menghasilkan prompt visual realistis yang cocok untuk AI image generation, dengan gaya profesional seperti digital coloring di Ibis Paint.
+  const data = await response.json();
 
-## Fitur
+  if (!response.ok || !data.ok) {
+    throw new Error(data.message || 'Prompt generation failed.');
+  }
 
-- Desain landing page modern
-- Form input untuk karakter, adegan, mood, dan style
-- Output prompt per role kreatif
-- Final image prompt siap copy
-- UI responsive untuk desktop dan mobile
+  setPromptFields(data);
+}
 
-## Jalankan di browser
+async function generateImage() {
+  const payload = Object.fromEntries(new FormData(form).entries());
+  imagePreviewBox.classList.add('hidden');
 
-Karena project ini berbasis HTML/CSS/JS statis, Anda bisa langsung membuka file `index.html` di browser.
+  try {
+    const response = await fetch('/api/generate-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
 
-Atau jalankan server lokal:
+    const data = await response.json();
 
-```bash
-python3 -m http.server 8000
-```
+    if (!response.ok || !data.ok) {
+      throw new Error(data.message || 'Image generation failed.');
+    }
 
-Lalu buka:
+    imagePreview.src = data.imageUrl;
+    imagePreviewBox.classList.remove('hidden');
+  } catch (error) {
+    alert(error.message || 'Tidak dapat menghasilkan image.');
+  }
+}
 
-```text
-http://localhost:8000
-```
+async function handleSubmit(event) {
+  event.preventDefault();
+  const payload = Object.fromEntries(new FormData(form).entries());
 
-## Struktur file
+  try {
+    await fetchGeneratedPrompt(payload);
+  } catch (error) {
+    alert(error.message || 'Gagal membuat prompt.');
+  }
+}
 
-```text
-chiroai/
-├── index.html
-├── styles.css
-├── script.js
-├── README.md
-└── .gitignore
-```
+async function checkApiHealth() {
+  try {
+    const response = await fetch('/api/health');
+    const data = await response.json();
+    alert(data.message || 'API ready.');
+  } catch (error) {
+    alert('API is offline. Start the server with: npm start');
+  }
+}
 
-## Catatan
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
 
-Project ini adalah starter UI dan prompt workflow. Untuk hasil gambar yang lebih kuat, Anda bisa menghubungkan ke model generatif seperti SDXL, Flux, Midjourney, atau API penyedia gambar lainnya.
+form.addEventListener('submit', handleSubmit);
+document.getElementById('generateImageBtn').addEventListener('click', generateImage);
+document.getElementById('healthCheckBtn').addEventListener('click', checkApiHealth);
+document.getElementById('copyAllBtn').addEventListener('click', async () => {
+  const allText = [
+    authorPrompt.value,
+    coloristPrompt.value,
+    backgroundPrompt.value,
+    editorPrompt.value,
+    narratorPrompt.value,
+    finalPrompt.value
+  ].join('\n\n---\n\n');
 
-## Lisensi
+  const success = await copyText(allText);
+  alert(success ? 'Semua prompt berhasil disalin.' : 'Gagal menyalin. Salin manual.');
+});
 
-MIT
+document.querySelectorAll('.mini-copy').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const target = document.getElementById(button.dataset.target);
+    const success = await copyText(target.value);
+    alert(success ? 'Prompt berhasil disalin.' : 'Gagal menyalin.');
+  });
+});
+
+fetchGeneratedPrompt(Object.fromEntries(new FormData(form).entries()));

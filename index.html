@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChiroAI Studio</title>
+    <meta
+      name="description"
+      content="ChiroAI Studio membantu membuat alur kreatif visual: author, colorist, editor, narrator, background, dan prompt gaya realistis profesional."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-one"></div>
+    <div class="bg-orb orb-two"></div>
+
+    <header class="topbar container">
+      <div class="brand">
+        <div class="brand-mark">C</div>
+        <span>ChiroAI</span>
+      </div>
+      <nav>
+        <a href="#features">Fitur</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#studio">Studio</a>
+      </nav>
+      <button class="ghost-btn">Mulai</button>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <div class="hero-copy">
+          <span class="eyebrow">AI Creative Studio</span>
+          <h1>Buat visual realistis dengan AI yang bekerja seperti tim artist profesional.</h1>
+          <p>
+            ChiroAI membantu mengolah ide menjadi komposisi visual: author, colorist,
+            editor, narrator, background, dan role kreatif lain dengan gaya realistis,
+            cinematic, dan professional seperti coloring di Ibis Paint.
+          </p>
+          <div class="cta-row">
+            <button class="primary-btn" id="generateBtn">Generate Brief</button>
+            <button class="secondary-btn" id="copyAllBtn">Copy All</button>
+          </div>
+          <ul class="mini-stats">
+            <li><strong>6+</strong> role kreatif</li>
+            <li><strong>Realistik</strong> cinematic</li>
+            <li><strong>Photoreal</strong> shading</li>
+          </ul>
+        </div>
+
+        <div class="hero-panel card">
+          <div class="panel-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="panel-body">
+            <p class="label">Prompt visual utama</p>
+            <textarea id="mainPrompt" rows="8">A young female illustrator in a rainy city alley, dramatic cinematic lighting, realistic skin texture, detailed hair, soft natural makeup, professional digital painting style, rich warm and cool color grading, sharp linework, layered shading, atmospheric fog, subtle reflections, ultra-detailed, high contrast, masterpiece composition</textarea>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="features container">
+        <div class="section-title">
+          <span>Fungsi utama</span>
+          <h2>Setiap peran punya tugas spesifik</h2>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card card">
+            <span class="feature-icon">✍️</span>
+            <h3>Author</h3>
+            <p>Menyusun ide cerita, karakter, emosi, dan narasi visual.</p>
+          </article>
+          <article class="feature-card card">
+            <span class="feature-icon">🎨</span>
+            <h3>Colorist</h3>
+            <p>Merancang palette, saturasi, lighting, dan warna kulit realistis.</p>
+          </article>
+          <article class="feature-card card">
+            <span class="feature-icon">🎬</span>
+            <h3>Editor</h3>
+            <p>Menata komposisi, fokus, angle, dan keseimbangan visual.</p>
+          </article>
+          <article class="feature-card card">
+            <span class="feature-icon">🗣️</span>
+            <h3>Narrator</h3>
+            <p>Mendeskripsikan mood, suasana, dan cerita yang ingin disampaikan.</p>
+          </article>
+          <article class="feature-card card">
+            <span class="feature-icon">🌆</span>
+            <h3>Background</h3>
+            <p>Mengembangkan lingkungan, detail tempat, atmosfer, dan depth.</p>
+          </article>
+          <article class="feature-card card">
+            <span class="feature-icon">✨</span>
+            <h3>Detail Pass</h3>
+            <p>Menambahkan tekstur realistis, highlights, dan polishing akhir.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="workflow" class="workflow container">
+        <div class="section-title left">
+          <span>Workflow</span>
+          <h2>Alur yang bisa dipakai untuk membuat art realistis</h2>
+        </div>
+
+        <div class="input-grid">
+          <div class="form-card card">
+            <label for="character">Karakter utama</label>
+            <input id="character" type="text" value="artis perempuan muda dengan ekspresi tenang" />
+
+            <label for="scene">Adegan</label>
+            <input id="scene" type="text" value="jalan kota hujan malam dengan lampu neon dan angin lembut" />
+
+            <label for="mood">Mood</label>
+            <input id="mood" type="text" value="dramatic, cinematic, melancholic, elegant" />
+
+            <label for="style">Style</label>
+            <input id="style" type="text" value="realistic digital painting, professional Ibis Paint coloring, ultra detailed" />
+          </div>
+
+          <div id="studio" class="result-card card">
+            <div class="result-header">
+              <h3>Hasil prompt per role</h3>
+            </div>
+
+            <div class="prompt-stack">
+              <div class="prompt-block">
+                <div class="prompt-label-row">
+                  <label>Author</label>
+                  <button class="copy-btn" data-copy="authorPrompt">Copy</button>
+                </div>
+                <textarea id="authorPrompt" rows="4"></textarea>
+              </div>
+
+              <div class="prompt-block">
+                <div class="prompt-label-row">
+                  <label>Colorist</label>
+                  <button class="copy-btn" data-copy="coloristPrompt">Copy</button>
+                </div>
+                <textarea id="coloristPrompt" rows="4"></textarea>
+              </div>
+
+              <div class="prompt-block">
+                <div class="prompt-label-row">
+                  <label>Background</label>
+                  <button class="copy-btn" data-copy="backgroundPrompt">Copy</button>
+                </div>
+                <textarea id="backgroundPrompt" rows="4"></textarea>
+              </div>
+
+              <div class="prompt-block">
+                <div class="prompt-label-row">
+                  <label>Editor</label>
+                  <button class="copy-btn" data-copy="editorPrompt">Copy</button>
+                </div>
+                <textarea id="editorPrompt" rows="4"></textarea>
+              </div>
+
+              <div class="prompt-block">
+                <div class="prompt-label-row">
+                  <label>Narrator</label>
+                  <button class="copy-btn" data-copy="narratorPrompt">Copy</button>
+                </div>
+                <textarea id="narratorPrompt" rows="4"></textarea>
+              </div>
+
+              <div class="prompt-block final-prompt">
+                <div class="prompt-label-row">
+                  <label>Final Image Prompt</label>
+                  <button class="copy-btn" data-copy="finalPrompt">Copy</button>
+                </div>
+                <textarea id="finalPrompt" rows="5"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
